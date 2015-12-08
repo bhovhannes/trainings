@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="C">
+    <head>
+        <title>04-module-properties</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            angular.module('A', []);
+            angular.module('B', []);
+
+            var c = angular.module('C', ['A', 'B']);
+            console.log("name=", c.name);
+            console.log("requires=", c.requires);
+        </script>
+    </head>
+    <body>
+        <h1>check the console</h1>
+    </body>
+</html>

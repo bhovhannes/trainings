@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>08-providers</title>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="src/demo.js"></script>
+        <script src="src/randomUtil.service.js"></script>
+        <script src="src/rocketLauncher.service.js"></script>
+        <script>
+            var _module = angular.module('demo');
+
+            _module.config(['USE_PREMIUM_FUEL', 'rocketLauncherProvider', function(USE_PREMIUM_FUEL, rocketLauncherProvider) {
+                rocketLauncherProvider.enablePremiumFuelUsage(USE_PREMIUM_FUEL);
+                rocketLauncherProvider.setSecretKeyMin(-10);
+                rocketLauncherProvider.setSecretKeyMax(10);
+            }]);
+
+            _module.run(['$rootScope', 'rocketLauncher', function($rootScope, rocketLauncher) {
+                rocketLauncher.launch();
+                $rootScope.latestLaunchInfo = rocketLauncher.getLaunchInfo();
+            }]);
+        </script>
+    </head>
+    <body>
+        <h2>
+            <pre>{{ latestLaunchInfo | json }}</pre>
+        </h2>
+    </body>
+</html>

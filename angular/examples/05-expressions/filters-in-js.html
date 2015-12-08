@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <title>05-filters-in-js</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            function MyController($scope, $filter) {
+                $scope.getTodayAsString = function() {
+                    return $filter('date')(new Date(), 'd-M-y');
+                };
+            }
+        </script>
+    </head>
+    <body ng-controller="MyController">
+        <h1>Today is {{ getTodayAsString() }}</h1>
+    </body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <title>01-data-binding</title>
+        <script>
+            window.addEventListener('load', function() {
+                var input = document.getElementById('myInput'),
+                    h1 = document.querySelector('h1');
+                input.addEventListener('input', function(evt) {
+                    h1.innerHTML = 'Hello ' + evt.target.value;
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <input id="myInput" type="text" placeholder="Your name">
+        <h1>Hello</h1>
+    </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>07-module-phases</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var myApp = angular.module('demo', []);
+            //config phase
+            myApp.config(['$logProvider', function($logProvider) {
+                $logProvider.debugEnabled(true);
+            }]);
+            //run phase
+            myApp.run(['$log', function($log) {
+                $log.debug('Message#1');
+                alert('Message#1');
+            }]);
+            myApp.run(['$logProvider', function($logProvider) {
+                //this will produce JS error
+            }]);
+            myApp.run(['$log', function($log) {
+                $log.debug('Message#2');
+                alert('Message#2');
+            }]);
+        </script>
+    </head>
+    <body>
+        <h1>Check out console</h1>
+    </body>
+</html>

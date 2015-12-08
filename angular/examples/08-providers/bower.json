@@ -1,0 +1,24 @@
+{
+  "name": "08-providers",
+  "version": "0.0.0",
+  "homepage": "https://github.com/bhovhannes/trainings",
+  "authors": [
+    "Hovhannes Babayan <hovhannesbabayan@workfront.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.4.8",
+    "angular-mocks": "1.4.8"
+  }
+}

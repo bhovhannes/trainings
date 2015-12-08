@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <title>05-expressions</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var globalVar = 'Hello';
+        </script>
+    </head>
+    <body>
+        <!-- Context is scope -->
+        <h2>globalVar = {{globalVar}}</h2>
+
+        <!-- Expressions are forgiving -->
+        <h2>myVar = {{myVar}}</h2>
+
+        <!-- You can use almost all operators -->
+        <h2>1+2 = {{1 + 2}}</h2>
+
+        <!-- You cannot use `,` operator -->
+        <!-- <h2>(1,2) = {{(1,2)}}</h2> -->
+
+        <!-- You cannot use `void` operator.
+             Angular knows nothing about it and understands it as a scope function call. -->
+        <h2>void(2+3)+'x' = {{void(2+3)+'x'}}</h2>
+
+        <!-- `undefined` gets converted to empty string -->
+        <h2>undefined+'x' = {{undefined+'x'}}</h2>
+
+        <!-- You cannot use new -->
+        <!-- <h2>date = {{new Date()}}</h2> -->
+
+        <!-- No regex allowed -->
+        <!-- <h2>/a?/.toString() = {{/a?/.toString()}}</h2> -->
+
+        <h2>['Kevin','Bob','Stuart','Dave'] | filter:'e' =
+            {{ ['Kevin','Bob','Stuart','Dave'] | filter:'e' }}
+        </h2>
+
+        <h2>'this is not kebab case' | uppercase =
+            {{ 'this is not kebab case' | uppercase }}
+        </h2>
+    </body>
+</html>

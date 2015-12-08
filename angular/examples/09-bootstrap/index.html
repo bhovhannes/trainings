@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>09-bootstrap</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            angular.module('module1', []);
+
+            angular.module('module2', []);
+
+            function init(n) {
+                var el = document.getElementById('element'+n);
+                angular.bootstrap(el, ['module'+n]);
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="init('1')">Init App1</button>
+        <button onclick="init('2')">Init App2</button>
+        <div id="element1">App1: {{ 1+2 }}</div>
+        <div id="element2">App2: {{ 3+4 }}</div>
+    </body>
+</html>

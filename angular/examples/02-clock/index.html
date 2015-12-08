@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app>
+    <head>
+        <title>02-clock</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            function MyController($interval, $scope) {
+                var updateClock = function() {
+                    $scope.clock = new Date();
+                };
+                $interval(updateClock, 1000);
+                updateClock();
+            }
+        </script>
+    </head>
+    <body ng-controller="MyController">
+        <h1>Now is {{ clock }}</h1>
+    </body>
+</html>
