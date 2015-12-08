@@ -6,7 +6,7 @@
         beforeEach(angular.mock.module('demo'));
 
         var randomUtil;
-    	beforeEach(inject(function(_randomUtil_) {
+    	beforeEach(angular.mock.inject(function(_randomUtil_) {
     		randomUtil = _randomUtil_;
     	}));
 
@@ -24,7 +24,7 @@
             it('should always return value greater than min', function() {
         		Math.random.and.returnValue(0);
                 var actualResult = randomUtil.getRandomInt(10, 1000);
-                expect(actualResult >= 10).toBe(true);
+                expect(actualResult).toBe(10);
         	});
         });
     });
