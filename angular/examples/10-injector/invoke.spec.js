@@ -17,5 +17,4 @@ describe('injector.invoke() method', function() {
         );
         expect(result).toBe('Sum:5');
     });
-
 });
