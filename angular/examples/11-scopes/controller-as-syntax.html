@@ -7,12 +7,12 @@
         <script>
             var demo = angular.module('demo',[]);
 
-            demo.controller('ControllerA', function _ControllerA($scope) {
+            demo.controller('ControllerA', function _ControllerA() {
                 this.propA = 'propA';
                 this.name = 'Kevin';
             });
 
-            demo.controller('ControllerB', function _ControllerB($scope) {
+            demo.controller('ControllerB', function _ControllerB() {
                 this.propB = 'propB';
             });
         </script>
@@ -26,7 +26,7 @@
             <div ng-controller="ControllerB as ctrlB" class="block">
                 <h1>Scope {{ $id }}</h1>
                 <h2>Parent Scope ID {{ $parent.$id }}</h2>
-                <div>name = {{ ctrlB.name }} <input ng-model="vm.name"/></div>
+                <div>name = {{ ctrlB.name }} <input ng-model="ctrlB.name"/></div>
                 <div>propB = {{ ctrlB.propB }}</div>
             </div>
         </div>

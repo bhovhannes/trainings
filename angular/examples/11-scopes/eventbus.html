@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>events:11-structure</title>
+        <link href="styles.css" rel="stylesheet"/>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('ControllerA', function _ControllerA($scope) {
+                $scope.doBroadcast = function() {
+                    $scope.$broadcast('myEventFromA', {
+                        id: $scope.$id
+                    });
+                };
+                $scope.$on('myEvent', function(event, data) {
+                    alert('Received myEvent event from:' + data.id + ' in ' + $scope.$id);
+                });
+                $scope.$on('myEventFromA', function(event, data) {
+                    alert('Received myEventFromA event from:' + data.id + ' in ' + $scope.$id);
+                });
+            });
+
+            demo.controller('ControllerB', function _ControllerB($scope) {
+                $scope.doEmit = function() {
+                    $scope.$emit('myEvent', {
+                        foo: 'bar',
+                        id: $scope.$id
+                    });
+                };
+                $scope.$on('myEvent', function(event, data) {
+                    alert('Received myEvent event from:' + data.id + ' in ' + $scope.$id);
+                });
+                $scope.$on('myEventFromA', function(event, data) {
+                    alert('Received myEventFromA event from:' + data.id + ' in ' + $scope.$id);
+                });
+            });
+
+            demo.controller('ControllerC', function _ControllerC($scope) {
+                $scope.$on('myEvent', function(event, data) {
+                    if ($scope.stopEvent) {
+                        event.stopPropagation();
+                    }
+                    alert('Received event from:' + data.id + ' in ' + $scope.$id);
+                });
+                $scope.$on('myEventFromA', function(event, data) {
+                    alert('Received event from:' + data.id + ' in ' + $scope.$id);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="ControllerA" class="block">
+            <h1>Scope {{ $id }}</h1>
+            <button ng-click="doBroadcast()">Broadcast</button>
+            <div ng-controller="ControllerB" class="block">
+                <h1>Scope {{ $id }}</h1>
+
+            </div>
+            <div ng-controller="ControllerC" class="block">
+                <h1>Scope {{ $id }}</h1>
+                <input type="checkbox" ng-model="stopEvent"/>Stop Event ({{stopEvent}})
+
+                <div ng-controller="ControllerB" class="block">
+                    <h1>Scope {{ $id }}</h1>
+                    <button ng-click="doEmit()">Emit</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

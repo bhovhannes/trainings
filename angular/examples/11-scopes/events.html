@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>eventbus:11-structure</title>
+        <link href="styles.css" rel="stylesheet"/>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('ControllerA', function _ControllerA($rootScope, $scope) {
+                $scope.sendEventFromA = function() {
+                    $rootScope.$emit('myEventA', {
+                        id: $scope.$id
+                    });
+                };
+                $rootScope.$on('myEventB', function(e, data) {
+                    console.log("Received myEventB e=", e);
+                    alert('Received myEventB event from:' + data.id + ' in ' + $scope.$id);
+                });
+            });
+
+            demo.controller('ControllerB', function _ControllerB($rootScope, $scope) {
+                $scope.sendEventFromB = function() {
+                    $rootScope.$emit('myEventB', {
+                        id: $scope.$id
+                    });
+                };
+                $rootScope.$on('myEventA', function(e, data) {
+                    console.log("Received myEventA e=", e);
+                    alert('Received myEventA event from:' + data.id + ' in ' + $scope.$id);
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="ControllerA" class="block">
+            <h1>Scope {{ $id }}</h1>
+            <button ng-click="sendEventFromA()">Send Event from A</button>
+            <div ng-controller="ControllerB" class="block">
+                <h1>Scope {{ $id }}</h1>
+                <button ng-click="sendEventFromB()">Send Event from B</button>
+            </div>
+        </div>
+        <pre>check console for more information</pre>
+    </body>
+</html>
