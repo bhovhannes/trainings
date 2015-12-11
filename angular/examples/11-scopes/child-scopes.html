@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>child-scopes:11-structure</title>
+        <link href="styles.css" rel="stylesheet"/>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('ControllerA', function _ControllerA($scope) {
+                $scope.propA = 'propA';
+                $scope.name = 'Kevin';
+            });
+
+            demo.controller('ControllerB', function _ControllerB($scope) {
+                $scope.propB = 'propB';
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="ControllerA" class="block">
+            <h1>Scope {{ $id }}</h1>
+            <h2>Parent Scope ID {{ $parent.$id }}</h2>
+            <h2>Root  Scope ID {{ $root.$id }}</h2>
+            <div>propA = {{ propA }}</div>
+            <div>name = {{ name }}</div>
+            <div ng-controller="ControllerB" class="block">
+                <h1>Scope {{ $id }}</h1>
+                <h2>Parent Scope ID {{ $parent.$id }}</h2>
+                <h2>Root  Scope ID {{ $root.$id }}</h2>
+                <div>name = {{ name }}
+                <div>propA = {{ propA }} (<i>inherits from parent</i>)</div>
+                <div>propB = {{ propB }}</div>
+            </div>
+        </div>
+    </body>
+</html>

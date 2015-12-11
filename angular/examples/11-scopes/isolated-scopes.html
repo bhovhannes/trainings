@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>isolated-scopes:11-structure</title>
+        <link href="styles.css" rel="stylesheet"/>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('ControllerA', function _ControllerA($scope) {
+                $scope.propA = 'propA';
+                $scope.name = 'Kevin';
+            });
+
+            demo.controller('ControllerB', function _ControllerB($scope) {
+                $scope.propB = 'propB';
+            });
+
+            demo.directive('isolated', function() {
+                return {
+                    restrict: 'E',
+                    scope: {},
+                    replace: true,
+                    template: '<div class="block-isolated">\
+                        <h1>Scope {{ $id }}</h1>\
+                        <h2>Parent Scope ID {{ $parent.$id }}</h2>\
+                        <div>name = {{ name }} <input ng-model="name"/></div>\
+                        <div>propA = {{ propA }} (<i>cannot inherit from parent</i>)</div>\
+                        <isolated2></isolated2>\
+                    </div>',
+                    link: function(scope) {
+                        scope.isolatedProp = 'isolatedProp';
+                    }
+                };
+            });
+
+            demo.directive('isolated2', function() {
+                return {
+                    restrict: 'E',
+                    scope: {},
+                    replace: true,
+                    template: '<div class="block-isolated">\
+                        <h1>Scope {{ $id }}</h1>\
+                        <h2>Parent Scope ID {{ $parent.$id }}</h2>\
+                        <div>name = {{ name }} <input ng-model="name"/></div>\
+                        <div>isolatedProp = {{ isolatedPropA }} (<i>cannot inherit from parent isolated scope</i>)</div>\
+                    </div>'
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="ControllerA" class="block">
+            <h1>Scope {{ $id }}</h1>
+            <h2>Parent Scope ID {{ $parent.$id }}</h2>
+            <div>propA = {{ propA }}</div>
+            <div>name = {{ name }}</div>
+            <div ng-controller="ControllerB" class="block">
+                <h1>Scope {{ $id }}</h1>
+                <h2>Parent Scope ID {{ $parent.$id }}</h2>
+                <div>name = {{ name }} <input ng-model="name"/></div>
+                <div>propA = {{ propA }} (<i>inherits from parent</i>)</div>
+                <div>propB = {{ propB }}</div>
+            </div>
+            <isolated></isolated>
+        </div>
+    </body>
+</html>

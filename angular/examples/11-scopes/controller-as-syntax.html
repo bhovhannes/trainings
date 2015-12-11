@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>controller-as-syntax:11-structure</title>
+        <link href="styles.css" rel="stylesheet"/>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('ControllerA', function _ControllerA($scope) {
+                this.propA = 'propA';
+                this.name = 'Kevin';
+            });
+
+            demo.controller('ControllerB', function _ControllerB($scope) {
+                this.propB = 'propB';
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="ControllerA as ctrlA" class="block">
+            <h1>Scope {{ $id }}</h1>
+            <h2>Parent Scope ID {{ $parent.$id }}</h2>
+            <div>propA = {{ ctrlA.propA }}</div>
+            <div>name = {{ ctrlA.name }}</div>
+            <div ng-controller="ControllerB as ctrlB" class="block">
+                <h1>Scope {{ $id }}</h1>
+                <h2>Parent Scope ID {{ $parent.$id }}</h2>
+                <div>name = {{ ctrlB.name }} <input ng-model="vm.name"/></div>
+                <div>propB = {{ ctrlB.propB }}</div>
+            </div>
+        </div>
+    </body>
+</html>
