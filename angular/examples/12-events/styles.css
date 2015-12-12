@@ -1,0 +1,7 @@
+.block {
+    padding: 20px;
+    border: 2px solid red;
+}
+.block-isolated {
+    border: 2px solid blue;
+}

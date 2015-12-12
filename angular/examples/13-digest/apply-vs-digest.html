@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>apply-vs-digest:13-digest</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.run(function($rootScope) {
+                $rootScope.rootMsg = 'rootScope message';
+            });
+
+            demo.controller('DemoController', function _DemoController($rootScope, $scope) {
+                var updateMessages = function() {
+                    var n = Math.random()*10;
+                    $scope.ctrlMsg = 'ctrl message ' + n;
+                    $rootScope.rootMsg = 'rootScope message' + n;
+                };
+
+                $scope.angularEvent = function() {
+                    updateMessages();
+                };
+
+                var btn1 = document.getElementById('btn1');
+                btn1.addEventListener('click', function() {
+                    updateMessages();
+                    $scope.$apply();
+                });
+
+                var btn2 = document.getElementById('btn2');
+                btn2.addEventListener('click', function() {
+                    updateMessages();
+                    $scope.$digest();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <h3>msg={{ rootMsg }}</h3>
+        <div ng-controller="DemoController">
+            <h3>msg={{ ctrlMsg }}</h3>
+            <button id="btn1">Native click (apply)</button>
+            <button id="btn2">Native click (digest)</button>
+            <button ng-click="angularEvent()">Angular click</button>
+        </div>
+    </body>
+</html>

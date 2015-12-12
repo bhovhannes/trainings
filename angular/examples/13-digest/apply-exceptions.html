@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>apply-exceptions:13-digest</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            //override default implementation of $exceptionHandler
+            demo.factory('$exceptionHandler', function() {
+                return function(exception, cause) {
+                    exception.message += ' (caused by "' + cause + '")';
+                    alert(exception.message);
+                };
+            });
+
+            //register controller for our app
+            demo.controller('DemoController', function _DemoController($scope) {
+                var actionFn = function() {
+                    $scope.msg = 'hello native ' + (Math.random()*10);
+                    throw new Error('will be handled by $exceptionHandler');
+                };
+
+                var btn1 = document.getElementById('btn1');
+                btn1.addEventListener('click', function() {
+                    $scope.$apply(actionFn);
+                });
+
+                var btn2 = document.getElementById('btn2');
+                btn2.addEventListener('click', function() {
+                    actionFn();
+                    $scope.$apply();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="DemoController" class="block">
+            <h3>msg={{ msg }}</h3>
+            <button id="btn1">Handled exception</button>
+            <button id="btn2">Not handled exception</button>
+            <pre>check error console</pre>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>watch:11-scopes</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoController', function _DemoController($scope) {
+                //setup watchers
+                $scope.$watch('users', function _usersWatchAction(newUsers, oldUsers, scope) {
+                    scope.msg1 = '_usersWatchAction executed';
+                });
+
+                $scope.$watchCollection('users', function _usersWatchCollectionAction(newUsers, oldUsers, scope) {
+                    scope.msg2 = '_usersWatchCollectionAction executed';
+                });
+
+                $scope.$watch('users', function _usersWatchDeepAction(newUsers, oldUsers, scope) {
+                    scope.msg3 = '_usersWatchDeepAction executed';
+                }, true);
+
+                $scope.replaceAllUsers = function() {
+                    $scope.users = [
+                        {name: 'Kevin', age: 10},
+                        {name: 'Bob', age: 3},
+                        {name: 'Stuart', age: 5}
+                    ];
+                };
+
+                $scope.addNewUser = function() {
+                    $scope.users.push({
+                        name: 'Added ' + $scope.users.length,
+                        age: $scope.users.length
+                    });
+                };
+
+                $scope.updateFirstUserAge = function() {
+                    $scope.users[0].age += 1;
+                };
+
+                $scope.reset = function() {
+                    $scope.msg1 = $scope.msg2 = $scope.msg3 = '';
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="DemoController" class="block">
+            <h3>msg1={{ msg1 }}</h3>
+            <h3>msg2={{ msg2 }}</h3>
+            <h3>msg3={{ msg3 }}</h3>
+            <button ng-click="replaceAllUsers()">Replace all users</button>
+            <button ng-click="addNewUser()">Add new user</button>
+            <button ng-click="updateFirstUserAge()">Update first user age</button>
+            <button ng-click="reset()">Reset</button>
+        </div>
+    </body>
+</html>

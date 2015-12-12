@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>apply:13-digest</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoController', function _DemoController($scope) {
+                $scope.angularEvent = function() {
+                    $scope.msg = 'hello angular ' + (Math.random()*10);
+                };
+
+                $scope.tryCallApply = function() {
+                    $scope.msg = '$digest already in progress. check error console.';
+                    $scope.$apply();
+                };
+
+                var btn = document.getElementById('btn');
+                btn.addEventListener('click', function() {
+                    $scope.$apply(function() {
+                        $scope.msg = 'hello native ' + (Math.random()*10);
+                    });
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="DemoController">
+            <h3>msg={{ msg }}</h3>
+            <button id="btn">Native click</button>
+            <button ng-click="angularEvent()">Angular click</button>
+            <button ng-click="tryCallApply()">Angular click with apply</button>
+        </div>
+    </body>
+</html>
