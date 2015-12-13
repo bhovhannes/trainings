@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>watch-infinite-loop:13-digest</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoController', function _DemoController($scope) {
+                $scope.foo = true;
+
+                $scope.startInfiniteLoop = function() {
+                    $scope.$watch('foo', function() {
+                        $scope.foo = !$scope.foo;
+                    });
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="DemoController">
+            <h3>foo={{ foo }}</h3>
+            <button ng-click="startInfiniteLoop()">Change foo</button>
+            <pre>check error console</pre>
+        </div>
+    </body>
+</html>
