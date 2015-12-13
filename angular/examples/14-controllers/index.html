@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>14-controllers</title>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="src/demo.js"></script>
+        <script src="src/demo.controller.js"></script>
+    </head>
+    <body>
+        <div ng-controller="DemoCtrl">
+            <button ng-click="sortUsersBy('age')">Sort by age</button>
+            <button ng-click="sortUsersBy('name')">Sort by name</button>
+            <p>Users
+                <pre>{{users | json}}</pre>
+            </p>
+        </div>
+    </body>
+</html>
