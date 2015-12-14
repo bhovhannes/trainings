@@ -6,10 +6,6 @@
         <script>
             var demo = angular.module('demo',[]);
 
-            demo.run(function($rootScope) {
-                $rootScope.rootMsg = 'rootScope message';
-            });
-
             demo.controller('DemoController', function _DemoController($rootScope, $scope) {
                 var updateMessages = function() {
                     var n = Math.random()*10;
