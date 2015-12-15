@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>multiple-apps:09-bootstrap</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            angular.module('module1', []).run(function($rootScope) {
+                $rootScope.msg = 'Module1';
+            });
+
+            angular.module('module2', []).run(function($rootScope) {
+                $rootScope.msg = 'Module2';
+            });
+        </script>
+    </head>
+    <body>
+        You CANNOT use multiple ng-app per page.<br/>
+        The solution is to bootstrap each app manually using angular.bootstrap()<br/>
+        <div ng-app="module1">{{msg}}</div>
+        <div ng-app="module2">{{msg}}</div>
+    </body>
+</html>
