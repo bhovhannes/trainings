@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    describe('randomUtil', function() {
+    describe('DemoCtrl', function() {
 
         beforeEach(angular.mock.module('demo'));
 
