@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>terminal:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            function defineDirective(n, prefix, makeTerminal) {
+                var directiveName = prefix ? prefix+'demo'+n : 'demo'+n;
+                demo.directive(directiveName, function() {
+                    return {
+                        restrict: 'A',
+                        priority: n,
+                        terminal: makeTerminal,
+                        compile: function() {
+                            console.log('compile', directiveName);
+                            return {
+                                'pre': function preLink() {
+                                    console.log('prelink', directiveName);
+                                },
+                                'post': function link() {
+                                    console.log('link', directiveName);
+                                }
+                            };
+                        }
+                    };
+                });
+            }
+
+            defineDirective(3);
+            defineDirective(4, 'a', true);
+            defineDirective(5, 'c', true);
+            defineDirective(5, 'b', true);
+            defineDirective(9);
+        </script>
+    </head>
+    <body>
+        <div>
+            <div demo3 ademo4 cdemo5 bdemo5 demo9></div>
+            Directives with same priority are getting parsed in order of their registration<br/>
+            Directives with numerical priority less than that of terminal directives are skipped<br/>
+            Check console for details<br/>
+        </div>
+    </body>
+</html>

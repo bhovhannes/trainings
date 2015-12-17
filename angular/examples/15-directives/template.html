@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>template:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.directive('demoTemplate', function() {
+                return {
+                    restrict: 'A',
+                    template: '<div style="background:red">demoTemplate</div>'
+                };
+            });
+
+            //if we want to customize template based on arguments
+            demo.directive('demoTemplateFn', function() {
+                return {
+                    restrict: 'A',
+                    template: function(tElement, tAttrs) {
+                        if (attrs['mode'] === 'small') {
+                            return '<div style="background:green">demoTemplate small</div>';
+                        }
+                        if (attrs['mode'] === 'large') {
+                            return '<div style="background:grey">demoTemplate large</div>';
+                        }
+                        return '<b>no mode</b>';
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <div demo-template></div>
+            <div demo-template-fn mode="small"></div>
+            <div demo-template-fn mode="large"></div>
+            <div demo-template-fn></div>
+        </div>
+    </body>
+</html>

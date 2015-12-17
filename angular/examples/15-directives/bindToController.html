@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>bindToController:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoCtrl', function($scope) {
+                $scope.name = 'Hello';
+            });
+            demo.directive('demoIsolate1', function() {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        localName: '@name'
+                    },
+                    template: '\
+                        localName = {{ ctrl.localName }}<br/>\
+                    ',
+                    bindToController: true,
+                    controllerAs: 'ctrl',
+                    controller: function() {
+                        alert(this.localName)
+                    }
+                };
+            });
+            demo.directive('demoIsolate2', function() {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        localName: '@name'
+                    },
+                    template: '\
+                        localName = {{ localName }}<br/>\
+                    ',
+                    bindToController: false, //default
+                    controllerAs: 'ctrl',
+                    controller: function($scope) {
+                        alert($scope.localName)
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="DemoCtrl">
+            name = {{ name }}<br/>
+            <hr/>
+            <div demo-isolate1 name="{{ name + ' world1' }}"></div>
+            <hr/>
+            <div demo-isolate2 name="{{ name + ' world2' }}"></div>
+        </div>
+    </body>
+</html>

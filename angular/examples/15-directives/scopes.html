@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>scopes:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.directive('demo', function() {
+                return {
+                    restrict: 'A',
+                    scope: true,
+                    template: '\
+                        scope #{{ $id }}, parent scope #{{ $parent.$id }}, root scope #{{ $root.$id }}\
+                        <div demo-child></div>\
+                        <div demo-isolate></div>\
+                    ',
+                };
+            });
+            demo.directive('demoChild', function() {
+                return {
+                    restrict: 'A',
+                    scope: false,
+                    template: 'scope #{{ $id }}, parent scope #{{ $parent.$id }}, root scope #{{ $root.$id }}'
+                };
+            });
+            demo.directive('demoIsolate', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    template: 'scope #{{ $id }}, parent scope #{{ $parent.$id }}, root scope #{{ $root.$id }}'
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div demo></div>
+    </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>passing-params-expr:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoCtrl', function($scope) {
+                $scope.name = 'Hello';
+                $scope.setName = function(newName) {
+                    $scope.name = newName;
+                };
+            });
+            demo.directive('demoIsolate', function() {
+                return {
+                    restrict: 'A',
+                    scope: {
+                        localFn: '&fn'
+                    },
+                    template: '\
+                        <button ng-click="localFn({firstName: \'Bob\', lastName: \'Dylan\'})">setNewName</button>\
+                    '
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div ng-controller="DemoCtrl">
+            name = {{ name }}<br/>
+            <div demo-isolate fn="setName(firstName + ' ' + lastName)"></div>
+        </div>
+    </body>
+</html>

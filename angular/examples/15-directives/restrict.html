@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>restrict:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.directive('demoE', function() {
+                return {
+                    restrict: 'E',
+                    template: 'Demo E'
+                };
+            });
+            demo.directive('demoA', function() {
+                return {
+                    restrict: 'A',
+                    template: 'Demo A'
+                };
+            });
+            demo.directive('demoC', function() {
+                return {
+                    restrict: 'C',
+                    scope: {},
+                    template: 'Demo C = {{ val }}',
+                    link: function (scope, element, attrs) {
+                        scope.val = attrs['demoC'];
+                    }
+                };
+            });
+            demo.directive('demoM', function($compile) {
+                return {
+                    restrict: 'M',
+                    scope: {},
+                    template: 'Demo M', //doesn't have any effect for comment directives
+                    link: function (scope, element, attrs) {
+                        scope.val = attrs['demoM'];
+                        element.after($compile("<span>demo M = {{val}}</span>")(scope));
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <demo-e></demo-e>
+        <div demo-a></div>
+        <div class="demo-c: zap zup zub;"></div>
+        <!-- directive: demo-m foo bar baz -->
+    </body>
+</html>
