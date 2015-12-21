@@ -8,6 +8,7 @@
 
             demo.controller('DemoCtrl', function($scope) {
                 $scope.name = 'Hello';
+                $scope.lastName = 'Stuart';
                 $scope.setName = function(newName) {
                     $scope.name = newName;
                 };
@@ -19,7 +20,8 @@
                         localFn: '&fn'
                     },
                     template: '\
-                        <button ng-click="localFn({firstName: \'Bob\', lastName: \'Dylan\'})">setNewName</button>\
+                        <button ng-click="localFn({firstName: \'Bob\', lastName: \'Dylan\'})">setName to Bob Dylan</button>\
+                        <button ng-click="localFn({firstName: \'Bob\'})">setName to Bob Stuart</button>\
                     '
                 };
             });
@@ -28,7 +30,9 @@
     <body>
         <div ng-controller="DemoCtrl">
             name = {{ name }}<br/>
-            <div demo-isolate fn="setName(firstName + ' ' + lastName)"></div>
+            <div demo-isolate
+                fn="setName(firstName + ' ' + lastName + z)">
+            </div>
         </div>
     </body>
 </html>
