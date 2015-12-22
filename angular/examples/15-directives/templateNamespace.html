@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>templateNamespace:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.directive('demoTemplateHtml', function() {
+                return {
+                    restrict: 'A',
+                    template: '<div>demoTemplateHtml\
+                    <svg>\
+                        <circle cx="125" cy="125" r="75" fill="orange" />\
+                    </svg></div>'
+                };
+            });
+
+            //needs templateNamespace specified to work!
+            demo.directive('demoTemplateSvg', function() {
+                return {
+                    restrict: 'A',
+                    templateNamespace: 'svg',
+                    replace: true,
+                    template: '<circle cx="125" cy="125" r="75" fill="orange" />'
+                };
+            });
+
+            //works without templateNamespace specified!
+            demo.directive('demoTemplateSvgRect', function() {
+                return {
+                    restrict: 'A',
+                    template: '<rect x="25" y="25" width="100" height="50" fill="lime" stroke-width="6" stroke="magenta" />'
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <div demo-template-html></div>
+            <svg>
+                <circle demo-template-svg></circle>
+            </svg>
+            <svg demo-template-svg-rect></svg>
+        </div>
+    </body>
+</html>
