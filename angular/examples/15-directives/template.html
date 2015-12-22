@@ -18,10 +18,10 @@
                 return {
                     restrict: 'A',
                     template: function(tElement, tAttrs) {
-                        if (attrs['mode'] === 'small') {
+                        if (tAttrs['mode'] === 'small') {
                             return '<div style="background:green">demoTemplate small</div>';
                         }
-                        if (attrs['mode'] === 'large') {
+                        if (tAttrs['mode'] === 'large') {
                             return '<div style="background:grey">demoTemplate large</div>';
                         }
                         return '<b>no mode</b>';

@@ -35,7 +35,9 @@
                     template: 'Demo M', //doesn't have any effect for comment directives
                     link: function (scope, element, attrs) {
                         scope.val = attrs['demoM'];
-                        element.after($compile("<span>demo M = {{val}}</span>")(scope));
+                        element.after(
+                            $compile("<span>demo M = {{val}}</span>")(scope)
+                        );
                     }
                 };
             });
