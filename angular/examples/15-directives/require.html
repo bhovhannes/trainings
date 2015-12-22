@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="demo">
     <head>
-        <title>controller:15-directives</title>
+        <title>require:15-directives</title>
         <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
         <script>
             var demo = angular.module('demo',[]);
@@ -10,9 +10,23 @@
                     restrict: 'A',
                     scope: {},
                     controller: ['$scope', '$attrs', function($scope, $attrs) {
-                        $scope.msg = 'Hello World';
+                        $scope.msg = 'Demo Hello World';
+                        this.getMsg = function() {
+                            return 'Bob';
+                        };
                     }],
-                    template: '<span>{{msg}}</span>'
+                    template: '{{msg}}<div demo-child></div>'
+                };
+            });
+            demo.directive('demoChild', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    require: '^^demo',
+                    link: function(scope, el, attrs, demoCtrl) {
+                        scope.childMsg = demoCtrl.getMsg();
+                    },
+                    template: '{{childMsg}}'
                 };
             });
         </script>
