@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>scope-limitation:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+            demo.controller('DemoCtrl', function() {
+            });
+
+            demo.directive('demoNoScope1', function() {
+                return {
+                    restrict: 'A',
+                    scope: false,
+                    link: function(scope) {
+                        console.log('demoNoScope1: scope #', scope.$id, ' parent scope #', scope.$parent.$id)
+                    }
+                };
+            });
+            demo.directive('demoNoScope2', function() {
+                return {
+                    restrict: 'A',
+                    scope: false,
+                    link: function(scope) {
+                        console.log('demoNoScope2: scope #', scope.$id, ' parent scope #', scope.$parent.$id)
+                    }
+                };
+            });
+            demo.directive('demoChildScope1', function() {
+                return {
+                    restrict: 'A',
+                    scope: true,
+                    link: function(scope) {
+                        console.log('demoChildScope1: scope #', scope.$id, ' parent scope #', scope.$parent.$id)
+                    }
+                };
+            });
+            demo.directive('demoChildScope2', function() {
+                return {
+                    restrict: 'A',
+                    scope: true,
+                    link: function(scope) {
+                        console.log('demoChildScope2: scope #', scope.$id, ' parent scope #', scope.$parent.$id)
+                    }
+                };
+            });
+            demo.directive('demoIsolateScope1', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    link: function(scope) {
+                        console.log('demoIsolateScope1: scope #', scope.$id, ' parent scope #', scope.$parent.$id)
+                    }
+                };
+            });
+            demo.directive('demoIsolateScope2', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    link: function(scope) {
+                        console.log('demoIsolateScope2: scope #', scope.$id, ' parent scope #', scope.$parent.$id)
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body ng-controller="DemoCtrl">
+        <h2>check console for details</h2>
+
+        no scope + no scope => will use their parent's scope
+        <div demo-no-scope1 demo-no-scope2></div><br/>
+
+        child scope + no scope => will share one single child scope
+        <div demo-child-scope1 demo-no-scope1></div><br/>
+
+        child scope + child scope => will share one single child scope
+        <div demo-child-scope1 demo-child-scope2></div><br/>
+
+        isolated scope + no scope => The isolated directive will use it's own created isolated scope. The other directive will use its parent's scope
+        <div demo-isolate-scope1 demo-no-scope1></div><br/>
+
+        isolated scope + child scope => Won't work!
+        <!-- <div demo-isolate-scope1 demo-child-scope1></div> --><br/>
+
+        isolated scope + isolated scope => Won't work!
+        <!-- <div demo-isolate-scope1 demo-isolate-scope2></div> -->
+    </body>
+</html>
