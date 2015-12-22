@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>controller:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.directive('demo', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    controller: ['$scope', '$attrs', function($scope, $attrs) {
+                        $scope.msg = 'Hello World';
+                    }],
+                    template: '<span>{{msg}}</span>'
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <div demo></div>
+        </div>
+    </body>
+</html>
