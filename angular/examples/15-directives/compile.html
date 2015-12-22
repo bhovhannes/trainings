@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>compile:15-directives</title>
+        <style>
+            .red {
+                color: red;
+            }
+        </style>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.directive('demo', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    compile: function(tElement, tAttrs) {
+                        console.log("tElement=", tElement);
+                        console.log("foo=", tAttrs['attrFoo']);
+                        console.log("bar=", tAttrs['attrBar']);
+                        tElement.addClass(tElement.find('h3').text());
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body>
+        <div>
+            <h2>check console for details</h2>
+            <div demo attr-foo="v1" attr-bar="v2">
+                <h3>red</h3>
+            </div>
+        </div>
+    </body>
+</html>
