@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>transclusion-scope:16-transclusion</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoCtrl', ['$scope', function($scope) {
+                $scope.title = 'Check console';
+                $scope.text = 'Lorem ipsum dolor sit amet ...';
+            }]);
+
+            demo.directive('panel', function() {
+                return {
+                    restrict: 'E',
+                    transclude: true,
+                    scope: {
+                        title: '@'
+                    },
+                    template: '<div>\
+                                {{ title }}\
+                                <h2 class="header" style="background:grey"></h2>\
+                            </div>',
+                    link: function(scope, iElement, iAttrs, ctrl, $transclude) {
+                        console.log("scope.$id=", scope.$id);
+                        console.log("scope.$parent.$id=", scope.$parent.$id);
+
+                        var headerEl = iElement[0].querySelector('.header');
+                        headerEl = angular.element(headerEl);
+
+                        $transclude(function(clone, transclusionScope) {
+                            var i;
+                            for(i=0; i<clone.length; ++i) {
+                                if (!clone[i].hasAttribute) {
+                                    continue;
+                                }
+                                if (clone[i].hasAttribute('panel-header')) {
+                                    headerEl.append(clone[i]);
+                                }
+                            }
+                            console.log("transclusionScope.$id=", transclusionScope.$id);
+                            console.log("transclusionScope.$parent.$id=", transclusionScope.$parent.$id);
+                            console.log("transclusionScope.text=", transclusionScope.text);
+                        });
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body ng-controller="DemoCtrl">
+        <panel title="{{title}}">
+            <div panel-header>{{ text }}</div>
+        </panel>
+    </body>
+</html>

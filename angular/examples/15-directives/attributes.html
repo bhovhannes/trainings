@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>attributes:15-directives</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoCtrl', function () {
+                this.myAttrValue = 'foo';
+                this.changeMyAttrValue = function() {
+                    this.myAttrValue += 'Z';
+                };
+            });
+
+            demo.directive('panel', function() {
+                return {
+                    restrict: 'A',
+                    scope: {},
+                    template: '<pre>{{ log | json }}</pre>',
+                    link: function(scope, iElement, iAttrs) {
+                        scope.log = [];
+
+                        iAttrs.$set('customAttr', 'bar baz');
+                        scope.log.push( iElement.attr('custom-attr') );
+
+                        iAttrs.$observe('myAttr', function(newValue) {
+                            scope.log.push(newValue);
+                        });
+                    }
+                };
+            });
+        </script>
+    </head>
+    <body ng-controller="DemoCtrl as ctrl">
+        <button ng-click="ctrl.changeMyAttrValue()">Change myAttrValue</button>
+        <div panel my-attr="{{ctrl.myAttrValue}}"></div>
+    </body>
+</html>

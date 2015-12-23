@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>ngTransclude:16-transclusion</title>
+        <script src="https://code.angularjs.org/1.4.8/angular.js"></script>
+        <script>
+            var demo = angular.module('demo',[]);
+
+            demo.controller('DemoCtrl', ['$scope', function($scope) {
+                $scope.title = 'Header';
+                $scope.text = 'Lorem ipsum dolor sit amet ...';
+            }]);
+
+            demo.directive('panel', function() {
+                return {
+                    restrict: 'E',
+                    transclude: true,
+                    scope: {
+                        title: '@'
+                    },
+                    template: '<div>\
+                                <h1>{{ title }}</h1>\
+                                <div ng-transclude></div>\
+                            </div>'
+                };
+            });
+        </script>
+    </head>
+    <body ng-controller="DemoCtrl">
+        <panel title="{{title}}">
+            <div>{{ text }}</div>
+            <ul>
+                <li>first</li>
+                <li>second</li>
+            </ul>
+        </panel>
+    </body>
+</html>
