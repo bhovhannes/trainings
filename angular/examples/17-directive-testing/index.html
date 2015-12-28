@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="demo">
+    <head>
+        <title>17-directive-testing</title>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="src/demo.js"></script>
+        <script src="src/demo.directive.js"></script>
+        <script src="src/demo.controller.js"></script>
+        <script></script>
+    </head>
+    <body>
+        <div ng-controller="DemoCtrl">
+            <wf-panel>
+                <div panel-header>{{ headerText }}</div>
+                <div panel-body>
+                    <ul>
+                        <li ng-repeat="item in items track by $index">
+                            {{ item.name }}
+                        </li>
+                    </ul>
+                </div>
+            </wf-panel>
+        </div>
+    </body>
+</html>
