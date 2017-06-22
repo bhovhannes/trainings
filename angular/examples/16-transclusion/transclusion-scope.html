@@ -16,7 +16,8 @@
                     restrict: 'E',
                     transclude: true,
                     scope: {
-                        title: '@'
+                        title: '@',
+                        title2: '@title',
                     },
                     template: '<div>\
                                 {{ title }}\
@@ -49,8 +50,8 @@
         </script>
     </head>
     <body ng-controller="DemoCtrl">
-        <panel title="{{title}}">
-            <div panel-header>{{ text }}</div>
+        <panel title="{{title}}" title2="{{title}}">
+            <div panel-header>{{ text + $parent.title2 }}</div>
         </panel>
     </body>
 </html>
